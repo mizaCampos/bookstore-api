@@ -25,4 +25,12 @@ public class Livro{
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    public Livro(String titulo, String nome_autor, String texto, Categoria categoria){
+        super();
+        this.titulo = titulo;
+        this.nome_autor = nome_autor;
+        this.texto = texto;
+        this.categoria = categoria;
+    }
+
 }
