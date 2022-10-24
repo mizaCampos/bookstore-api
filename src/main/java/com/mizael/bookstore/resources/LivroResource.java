@@ -8,10 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.mizael.bookstore.domain.Livro;
 import com.mizael.bookstore.dtos.LivroDTO;
 import com.mizael.bookstore.service.LivroService;
@@ -34,7 +37,19 @@ public class LivroResource {
         List<Livro> list = livroService.findAll(id_cat);
         List<LivroDTO>listDTO = list.stream().map(obj -> new LivroDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(listDTO);
+        //localhost:8090/livros?categoria=1
     }
 
-    
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Livro> update(@PathVariable  Integer id, @RequestBody Livro obj){
+        Livro newObj = livroService.update(id, obj);
+        return ResponseEntity.status(HttpStatus.OK).body(newObj);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Livro> updatePatch(@PathVariable  Integer id, @RequestBody Livro obj){
+        Livro newObj = livroService.update(id, obj);
+        return ResponseEntity.status(HttpStatus.OK).body(newObj);
+    }
 }
+    
