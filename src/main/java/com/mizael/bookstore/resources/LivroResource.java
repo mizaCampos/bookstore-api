@@ -4,9 +4,12 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.mizael.bookstore.domain.Livro;
 import com.mizael.bookstore.dtos.LivroDTO;
 import com.mizael.bookstore.service.LivroService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/livros")
 public class LivroResource {
@@ -46,13 +49,13 @@ public class LivroResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Livro> update(@PathVariable  Integer id, @RequestBody Livro obj){
+    public ResponseEntity<Livro> update(@PathVariable  Integer id,@Valid @RequestBody Livro obj){
         Livro newObj = livroService.update(id, obj);
         return ResponseEntity.status(HttpStatus.OK).body(newObj);
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<Livro> updatePatch(@PathVariable  Integer id, @RequestBody Livro obj){
+    public ResponseEntity<Livro> updatePatch(@PathVariable  Integer id, @Valid @RequestBody Livro obj){
         Livro newObj = livroService.update(id, obj);
         return ResponseEntity.status(HttpStatus.OK).body(newObj);
     }
